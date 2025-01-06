@@ -1,0 +1,11 @@
+.form {
+    padding: 1rem 0rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.labelButton {
+    cursor: pointer;
+}
