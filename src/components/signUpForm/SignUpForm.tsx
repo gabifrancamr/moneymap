@@ -1,17 +1,15 @@
 "use client"
-import { createNewUser } from "@/actions";
+import { createNewUser, loginUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
+import { useDashboard } from "@/contexts/DashboardContext";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
-import cookie from 'js-cookie';
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'sonner';
 import * as zod from 'zod';
-import styles from "./signUp.module.css";
 
 const signUpSchema = zod.object({
     name: zod
@@ -41,9 +39,9 @@ const signUpSchema = zod.object({
 export type typeSignUpSchema = zod.infer<typeof signUpSchema>
 
 export default function SignUpForm() {
+    const { handleAuthentication } = useDashboard()
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-    const router = useRouter()
 
     const {
         register,
@@ -57,12 +55,18 @@ export default function SignUpForm() {
         if (data.password === data.confirmPassword) {
             const response = await createNewUser(data)
 
-            if (response.status === 'success' && response.token) {
-                if (typeof window !== 'undefined') {
-                    localStorage.setItem('token', response.token)
+            if (response.status === 'success' && response.user) {
+                const email = response.user.email
+                const password = response.user.password
+
+                const loginResponse = await loginUser(email, password);
+
+                if (loginResponse.status === 'success' && loginResponse.token) {
+                    handleAuthentication(loginResponse.token)
+                } else {
+                    toast.error('Erro ao autenticar usuário. Tente novamente.');
                 }
-                cookie.set('token', response.token, { expires: 1 / 24, path: '/' })
-                router.push('/dashboard')
+
             } else if (response.status === 'notNull') {
                 toast.error('Usuário já cadastrado no sistema')
             } else if (response.status === 'error') {
@@ -76,7 +80,7 @@ export default function SignUpForm() {
     }
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit(handleCreateNewUser)}>
+        <form onSubmit={handleSubmit(handleCreateNewUser)}>
             <Stack gap="4" align="center" maxW="sm">
                 <Field
                     label="Nome completo"
