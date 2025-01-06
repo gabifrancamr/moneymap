@@ -1,3 +1,5 @@
+"use client"
+
 import { useDashboard } from '@/contexts/DashboardContext';
 import { useRouter } from 'next/router';
 import React from 'react';

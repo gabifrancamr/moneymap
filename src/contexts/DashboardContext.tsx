@@ -1,3 +1,5 @@
+"use client"
+
 import cookie from 'js-cookie';
 import { useRouter } from 'next/router';
 import { createContext, useContext, useState } from 'react';
