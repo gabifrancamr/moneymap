@@ -6,7 +6,6 @@ import { PasswordInput } from "@/components/ui/password-input";
 import { useDashboard } from "@/contexts/DashboardContext";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'sonner';
@@ -15,13 +14,13 @@ import * as zod from 'zod';
 const signInSchema = zod.object({
     email: zod
         .string()
-        .nonempty("E-mail é obrigatório")
-        .email("Digite um e-mail válido"),
+        .nonempty("E-mail is required")
+        .email("Please enter a valid e-mail"),
     password: zod
         .string()
-        .nonempty("Senha é obrigatória")
-        .min(5, "A senha deve ter no mínimo 5 caracteres")
-        .max(15, "A senha deve ter no máximo 15 caracteres"),
+        .nonempty("Password is required")
+        .min(5, "Password must have at least 5 characters")
+        .max(15, "Password must have at most 15 characters"),
 })
 
 export type typeSignInSchema = zod.infer<typeof signInSchema>
@@ -29,7 +28,6 @@ export type typeSignInSchema = zod.infer<typeof signInSchema>
 export default function SignInForm() {
     const { handleAuthentication } = useDashboard()
     const [showPassword, setShowPassword] = useState(false)
-    const router = useRouter()
 
     const {
         register,
@@ -45,10 +43,10 @@ export default function SignInForm() {
         if (response.status === 'success' && response.token) {
             handleAuthentication(response.token)
         } else if (response.status === 'notFound') {
-            toast.error('Usuário não encontrado')
+            toast.error('User not found.')
         } else if (response.status === 'invalidPassword') {
             toast.error(
-                'Senha incorreta'
+                'Incorrect password.'
             )
         }
 
@@ -71,7 +69,7 @@ export default function SignInForm() {
                     />
                 </Field>
                 <Field
-                    label="Senha"
+                    label="Password"
                     required
                     invalid={!!errors.password}
                     errorText={errors.password?.message}
@@ -89,7 +87,7 @@ export default function SignInForm() {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                 >
-                    Entrar
+                    Login
                 </Button>
             </Stack>
         </form>

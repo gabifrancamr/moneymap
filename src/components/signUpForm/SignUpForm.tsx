@@ -14,24 +14,24 @@ import * as zod from 'zod';
 const signUpSchema = zod.object({
     name: zod
         .string()
-        .nonempty("Nome completo é obrigatório")
-        .min(3, "O nome deve ter no mínimo 3 caracteres"),
+        .nonempty("Full name is required")
+        .min(3, "The name must have at least 3 characters"),
     email: zod
         .string()
-        .nonempty("E-mail é obrigatório")
-        .email("Digite um e-mail válido"),
+        .nonempty("E-mail is required")
+        .email("Please enter a valid e-mail"),
     password: zod
         .string()
-        .nonempty("Senha é obrigatória")
-        .min(5, "A senha deve ter no mínimo 5 caracteres")
-        .max(15, "A senha deve ter no máximo 15 caracteres"),
+        .nonempty("Password is required")
+        .min(5, "Password must have at least 5 characters")
+        .max(15, "Password must have at most 15 characters"),
     confirmPassword: zod.string(),
 }).superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
         ctx.addIssue({
             path: ["confirmPassword"],
             code: zod.ZodIssueCode.custom,
-            message: "As senhas não coincidem",
+            message: "Passwords do not match",
         });
     }
 });
@@ -64,18 +64,18 @@ export default function SignUpForm() {
                 if (loginResponse.status === 'success' && loginResponse.token) {
                     handleAuthentication(loginResponse.token)
                 } else {
-                    toast.error('Erro ao autenticar usuário. Tente novamente.');
+                    toast.error('Error authenticating user. Please try again.');
                 }
 
             } else if (response.status === 'notNull') {
-                toast.error('Usuário já cadastrado no sistema')
+                toast.error('User already registered in the system.')
             } else if (response.status === 'error') {
                 toast.error(
-                    'Erro ao cadastrar usuário no Banco de Dados. Tente mais tarde.',
+                    'Error registering user in the database. Please try again later.',
                 )
             }
         } else {
-            toast.error('Digite senhas iguais')
+            toast.error('Please enter matching passwords.')
         }
     }
 
@@ -83,7 +83,7 @@ export default function SignUpForm() {
         <form onSubmit={handleSubmit(handleCreateNewUser)}>
             <Stack gap="4" align="center" maxW="sm">
                 <Field
-                    label="Nome completo"
+                    label="Full name"
                     required
                     invalid={!!errors.name}
                     errorText={errors.name?.message}
@@ -107,7 +107,7 @@ export default function SignUpForm() {
                     />
                 </Field>
                 <Field
-                    label="Senha"
+                    label="Password"
                     required
                     invalid={!!errors.password}
                     errorText={errors.password?.message}
@@ -122,7 +122,7 @@ export default function SignUpForm() {
                 </Field>
 
                 <Field
-                    label="Confirmar Senha"
+                    label="Confirm Password"
                     required
                     invalid={!!errors.confirmPassword}
                     errorText={errors.confirmPassword?.message}
@@ -140,7 +140,7 @@ export default function SignUpForm() {
                     loading={isSubmitting}
                     disabled={isSubmitting}
                 >
-                    Cadastrar
+                    Register
                 </Button>
             </Stack>
         </form>
