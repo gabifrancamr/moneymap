@@ -1,4 +1,5 @@
 import { Provider } from "@/components/ui/provider";
+import { DashboardProvider } from "@/contexts/DashboardContext";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -19,7 +20,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Provider>
-          {children}
+          <DashboardProvider>
+            {children}
+          </DashboardProvider>
         </Provider>
       </body>
     </html>
