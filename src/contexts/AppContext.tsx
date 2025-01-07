@@ -1,22 +1,22 @@
 "use client"
 
 import cookie from 'js-cookie';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { createContext, useContext, useState } from 'react';
 
-interface DashboardContextTypes {
+interface AppContextTypes {
     token: string | null
     handleAuthentication: (token: string) => void
     logOut: () => void
 }
 
-const DashboardContext = createContext({} as DashboardContextTypes);
+const AppContext = createContext({} as AppContextTypes);
 
 interface UsersProvider {
     children: React.ReactNode
 }
 
-export function DashboardProvider({ children }: UsersProvider) {
+export function AppProvider({ children }: UsersProvider) {
     const [token, setToken] = useState<string | null>(null);
     const router = useRouter();
 
@@ -37,10 +37,10 @@ export function DashboardProvider({ children }: UsersProvider) {
     }
 
     return (
-        <DashboardContext.Provider value={{ handleAuthentication, logOut, token }}>
+        <AppContext.Provider value={{ handleAuthentication, logOut, token }}>
             {children}
-        </DashboardContext.Provider>
+        </AppContext.Provider>
     );
 }
 
-export const useDashboard = () => useContext(DashboardContext);
+export const useAppContext = () => useContext(AppContext);

@@ -3,7 +3,7 @@ import { createNewUser, loginUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
-import { useDashboard } from "@/contexts/DashboardContext";
+import { useAppContext } from "@/contexts/AppContext";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from "react";
@@ -39,7 +39,7 @@ const signUpSchema = zod.object({
 export type typeSignUpSchema = zod.infer<typeof signUpSchema>
 
 export default function SignUpForm() {
-    const { handleAuthentication } = useDashboard()
+    const { handleAuthentication } = useAppContext()
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
 

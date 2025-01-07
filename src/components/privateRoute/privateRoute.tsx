@@ -1,11 +1,11 @@
 "use client"
 
-import { useDashboard } from '@/contexts/DashboardContext';
+import { useAppContext } from '@/contexts/AppContext';
 import { useRouter } from 'next/router';
 import React from 'react';
 
 export function PrivateRoute ({ children }: { children: React.ReactNode }) {
-  const { token } = useDashboard();
+  const { token } = useAppContext();
   const router = useRouter();
 
   if (!token) {

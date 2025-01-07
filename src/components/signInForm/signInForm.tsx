@@ -3,7 +3,7 @@ import { loginUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
-import { useDashboard } from "@/contexts/DashboardContext";
+import { useAppContext } from "@/contexts/AppContext";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from "react";
@@ -26,7 +26,7 @@ const signInSchema = zod.object({
 export type typeSignInSchema = zod.infer<typeof signInSchema>
 
 export default function SignInForm() {
-    const { handleAuthentication } = useDashboard()
+    const { handleAuthentication } = useAppContext()
     const [showPassword, setShowPassword] = useState(false)
 
     const {
