@@ -91,6 +91,7 @@ export default function SignUpForm() {
                     <Input
                         {...register("name")}
                         maxLength={70}
+                        colorPalette={"green"}
                     />
                 </Field>
                 <Field
@@ -104,6 +105,7 @@ export default function SignUpForm() {
                         type="email"
                         maxLength={254}
                         autoComplete="email"
+                        colorPalette={"green"}
                     />
                 </Field>
                 <Field
@@ -118,6 +120,7 @@ export default function SignUpForm() {
                         onVisibleChange={setShowPassword}
                         maxLength={15}
                         autoComplete="new-password"
+                        colorPalette={"green"}
                     />
                 </Field>
 
@@ -133,12 +136,14 @@ export default function SignUpForm() {
                         onVisibleChange={setShowConfirmPassword}
                         maxLength={15}
                         autoComplete="new-password"
+                        colorPalette={"green"}
                     />
                 </Field>
                 <Button
                     type="submit"
                     loading={isSubmitting}
                     disabled={isSubmitting}
+                    colorPalette={"green"}
                 >
                     Register
                 </Button>

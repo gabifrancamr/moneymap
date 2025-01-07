@@ -66,6 +66,7 @@ export default function SignInForm() {
                         type="email"
                         maxLength={254}
                         autoComplete="email"
+                        colorPalette={"green"}
                     />
                 </Field>
                 <Field
@@ -80,12 +81,14 @@ export default function SignInForm() {
                         onVisibleChange={setShowPassword}
                         maxLength={15}
                         autoComplete="new-password"
+                        colorPalette={"green"}
                     />
                 </Field>
                 <Button
                     type="submit"
                     loading={isSubmitting}
                     disabled={isSubmitting}
+                    colorPalette={"green"}
                 >
                     Login
                 </Button>
