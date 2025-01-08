@@ -8,7 +8,7 @@ import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import * as zod from 'zod';
 
 const signInSchema = zod.object({
@@ -41,6 +41,7 @@ export default function SignInForm() {
         const response = await loginUser(email, password)
 
         if (response.status === 'success' && response.token) {
+            toast.success('Redirecting...')
             handleAuthentication(response.token)
         } else if (response.status === 'notFound') {
             toast.error('User not found.')
