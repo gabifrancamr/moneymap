@@ -1,5 +1,4 @@
 import { Provider } from "@/components/ui/provider";
-import { AppProvider } from "@/contexts/AppContext";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from 'sonner';
@@ -21,10 +20,8 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <Provider>
-          <AppProvider>
             {children}
             <Toaster richColors position="top-center" closeButton />
-          </AppProvider>
         </Provider>
       </body>
     </html>
