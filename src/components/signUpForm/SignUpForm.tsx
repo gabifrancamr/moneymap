@@ -55,9 +55,9 @@ export default function SignUpForm() {
         if (data.password === data.confirmPassword) {
             const response = await createNewUser(data)
 
-            if (response.status === 'success' && response.user) {
-                const email = response.user.email
-                const password = response.user.password
+            if (response.status === 'success') {
+                const email = data.email
+                const password = data.password
 
                 const loginResponse = await loginUser(email, password);
 
