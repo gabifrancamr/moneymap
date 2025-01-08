@@ -2,6 +2,7 @@ import { Provider } from "@/components/ui/provider";
 import { AppProvider } from "@/contexts/AppContext";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from 'sonner';
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,6 +23,7 @@ export default function RootLayout({
         <Provider>
           <AppProvider>
             {children}
+            <Toaster richColors position="top-center" closeButton />
           </AppProvider>
         </Provider>
       </body>
