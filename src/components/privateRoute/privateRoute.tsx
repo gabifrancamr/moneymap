@@ -1,17 +1,31 @@
 "use client"
 
-import { useAppContext } from '@/contexts/AppContext';
+import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-export function PrivateRoute ({ children }: { children: React.ReactNode }) {
-  const { token } = useAppContext();
+export function PrivateRoute({ children }: { children: React.ReactNode }) {
+  const [loading, setLoading] = useState(true)
+  const { token } = useAuth()
   const router = useRouter();
 
-  if (!token) {
-    router.push('/'); 
-    return null;
-  }
+  useEffect(() => {
+    if (!token) {
+      router.push('/');
+    }
 
-  return <>{children}</>;
+    setLoading(false)
+
+  }, [token])
+
+
+  return (
+    <>
+      {loading ? (
+        <h1>Carregando...</h1>
+      ) : (
+        <>{children}</>
+      )}
+    </>
+  );
 };
