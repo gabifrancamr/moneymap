@@ -1,9 +1,9 @@
 "use client"
-import { createNewUser, loginUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useAppContext } from "@/contexts/AppContext";
+import { ResultType } from "@/types";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from "react";
@@ -52,30 +52,50 @@ export default function SignUpForm() {
     })
 
     async function handleCreateNewUser(data: typeSignUpSchema) {
-        if (data.password === data.confirmPassword) {
-            const response = await createNewUser(data)
+        if (data.password !== data.confirmPassword) {
+            toast.error('Please enter matching passwords.');
+            return;
+        }
 
-            if (response.status === 'success') {
-                const email = data.email
-                const password = data.password
+        try {
+            const response = await fetch('/api/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    password: data.password,
+                }),
+            });
 
-                const loginResponse = await loginUser(email, password);
+            const result: ResultType = await response.json();
 
-                if (loginResponse.status === 'success' && loginResponse.token) {
-                    handleAuthentication(loginResponse.token)
+            if (response.status === 201) {
+                const email = data.email;
+                const password = data.password;
+
+                const loginResponse = await fetch('/api/signin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password }),
+                });
+
+                const loginResult: ResultType = await loginResponse.json();
+
+                if (loginResponse.status === 200 && loginResult.token) {
+                    handleAuthentication(loginResult.token);
+                    toast.success(result.message)
                 } else {
                     toast.error('Error authenticating user. Please try again.');
                 }
-
-            } else if (response.status === 'notNull') {
-                toast.error('User already registered in the system.')
-            } else if (response.status === 'error') {
-                toast.error(
-                    'Error registering user in the database. Please try again later.',
-                )
+            } else if (response.status === 409) {
+                toast.error(result.message);
+            } else {
+                toast.error(result.message || 'Error registering user. Please try again.');
             }
-        } else {
-            toast.error('Please enter matching passwords.')
+        } catch (error) {
+            console.error(error);
+            toast.error('An unexpected error occurred. Please try again.');
         }
     }
 

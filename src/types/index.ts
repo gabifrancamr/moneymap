@@ -22,3 +22,9 @@ export interface FinancialInfo {
     createdAt: Date;
     updatedAt: Date;
 }
+
+export interface ResultType {
+    status: number
+    message: string
+    token?: string
+}

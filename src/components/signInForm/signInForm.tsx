@@ -1,9 +1,9 @@
 "use client"
-import { loginUser } from "@/actions";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { PasswordInput } from "@/components/ui/password-input";
 import { useAppContext } from "@/contexts/AppContext";
+import { ResultType } from "@/types";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from "react";
@@ -37,21 +37,32 @@ export default function SignInForm() {
         resolver: zodResolver(signInSchema)
     })
 
-    async function handleLoginUser({email, password}: typeSignInSchema) {
-        const response = await loginUser(email, password)
-
-        if (response.status === 'success' && response.token) {
-            toast.success('Redirecting...')
-            handleAuthentication(response.token)
-        } else if (response.status === 'notFound') {
-            toast.error('User not found.')
-        } else if (response.status === 'invalidPassword') {
-            toast.error(
-                'Incorrect password.'
-            )
+    async function handleLoginUser({ email, password }: typeSignInSchema) {
+        try {
+            const response = await fetch('/api/signin', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+    
+            const result: ResultType = await response.json();
+    
+            if (response.status === 200 && result.token) {
+                handleAuthentication(result.token); 
+                toast.success(result.message);
+            } else if (response.status === 404) {
+                toast.error(result.message);
+            } else if (response.status === 401) {
+                toast.error(result.message);
+            } else {
+                toast.error(result.message || 'An unexpected error occurred.');
+            }
+        } catch (error) {
+            console.error(error);
+            toast.error('An unexpected error occurred. Please try again.');
         }
-
     }
+    
 
     return (
         <form onSubmit={handleSubmit(handleLoginUser)}>
