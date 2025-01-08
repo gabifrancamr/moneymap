@@ -1,3 +1,5 @@
+"use server"
+
 import { typeSignUpSchema } from "@/components/signUpForm/SignUpForm"
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
@@ -19,7 +21,7 @@ export async function createNewUser(data: typeSignUpSchema) {
 
         const hashedPassword = await bcrypt.hash(data.password, 10)
 
-        const user = await db.user.create({
+        await db.user.create({
             data: {
                 name: data.name,
                 email: data.email,
@@ -27,8 +29,7 @@ export async function createNewUser(data: typeSignUpSchema) {
             },
         })
 
-        return { status: 'success', 
-            user: { email: user.email, password: data.password }, }
+        return { status: 'success'}
 
     } catch (error) {
         console.log(error)
@@ -48,7 +49,7 @@ export async function loginUser(email: string, password: string) {
             return { status: 'notFound' }; 
         }
 
-        const isPasswordValid = await bcrypt.compare(user.password, password)
+        const isPasswordValid = await bcrypt.compare(password, user.password)
 
         if (!isPasswordValid) {
             return { status: 'invalidPassword' }; 
@@ -68,4 +69,14 @@ export async function loginUser(email: string, password: string) {
         console.log(error)
         return { status: 'error' }
     }
+}
+
+export async function getUser(email: string) {
+    const user = await db.user.findUnique({
+        where: {
+            email,
+        }
+    })
+
+    return user
 }
