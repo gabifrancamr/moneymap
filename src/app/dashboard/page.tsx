@@ -3,7 +3,7 @@
 import { Header } from "@/components/header/Header"
 import { useAuth } from "@/hooks/useAuth"
 import { Box } from "@chakra-ui/react"
-import { useAppContext } from "../contexts/AppContext"
+import { useAppContext } from "../../contexts/AppContext"
 
 export default function Dashboard() {
     const { user, errorLoadingUser} = useAppContext()

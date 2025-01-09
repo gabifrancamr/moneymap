@@ -8,6 +8,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 interface AppContextTypes {
     user: User | null
     errorLoadingUser: boolean
+    refetchUser: (email: string) => Promise<void>
 }
 
 const AppContext = createContext({} as AppContextTypes);
@@ -59,8 +60,13 @@ export function AppProvider({ children }: UsersProvider) {
         
     }, [token])
 
+    async function refetchUser(email: string) {
+        const updatedUser = await getUserData(email);
+        setUser(updatedUser); 
+    }
+    
     return (
-        <AppContext.Provider value={{ user, errorLoadingUser}}>
+        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser }}>
             {children}
         </AppContext.Provider>
     )
