@@ -6,15 +6,19 @@ import {
     DialogRoot,
     DialogTitle,
     DialogTrigger
-} from "@/components/ui/dialog"
-import { FaUserCircle } from "react-icons/fa"
-import EditProfileForm from "../editProfileForm/EditProfileForm"
+} from "@/components/ui/dialog";
+import { Flex, Text } from "@chakra-ui/react";
+import { FaUserEdit } from "react-icons/fa";
+import EditProfileForm from "../editProfileForm/EditProfileForm";
 
 export function EditProfileBtn() {
     return (
         <DialogRoot>
-            <DialogTrigger asChild>
-                <FaUserCircle size={20} style={{ cursor: "pointer"}} />
+            <DialogTrigger cursor={"pointer"}>
+                <Flex alignItems={"center"} gap={"2"}>
+                    <FaUserEdit size={20} />
+                    <Text>Edit Profile</Text>
+                </Flex>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

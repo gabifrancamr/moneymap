@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { FaMoneyBillWave } from "react-icons/fa";
-import { EditProfileBtn } from "../editProfileBtn/EditProfileBtn";
+import { MenuHeader } from "../menuHeader/MenuHeader";
 import { ColorModeButton } from "../ui/color-mode";
 
 export function Header() {
@@ -11,7 +11,7 @@ export function Header() {
                 <Text>MoneyMap</Text>
             </Flex>
             <Flex gap={"3"} alignItems={"center"}>
-                <EditProfileBtn />
+                <MenuHeader />
                 <ColorModeButton />
             </Flex>
         </Flex>
