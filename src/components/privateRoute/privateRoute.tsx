@@ -22,7 +22,7 @@ export function PrivateRoute({ children }: { children: React.ReactNode }) {
   return (
     <>
       {loading ? (
-        <h1>Carregando...</h1>
+        <h1>Loading...</h1>
       ) : (
         <>{children}</>
       )}
