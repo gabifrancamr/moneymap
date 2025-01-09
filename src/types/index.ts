@@ -27,4 +27,5 @@ export interface ResultType {
     status: number
     message: string
     token?: string
+    email?: string
 }
