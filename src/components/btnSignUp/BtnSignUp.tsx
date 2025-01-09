@@ -1,11 +1,12 @@
 import { Button } from "@/components/ui/button"
 import {
-    DialogBody,
-    DialogCloseTrigger,
-    DialogContent,
-    DialogRoot,
-    DialogTrigger
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogRoot,
+  DialogTrigger
 } from "@/components/ui/dialog"
+import { Theme } from "@chakra-ui/react"
 import SignUpForm from "../signUpForm/SignUpForm"
 
 export function BtnSignUp() {
@@ -17,10 +18,12 @@ export function BtnSignUp() {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogBody justifyContent={"center"}>
-          <SignUpForm />
-        </DialogBody>
-        <DialogCloseTrigger />
+        <Theme appearance="dark">
+          <DialogBody justifyContent={"center"}>
+            <SignUpForm />
+          </DialogBody>
+          <DialogCloseTrigger />
+        </Theme>
       </DialogContent>
     </DialogRoot>
   )
