@@ -1,46 +1,30 @@
 "use client"
 
+import { Header } from "@/components/header/Header"
 import { useAuth } from "@/hooks/useAuth"
-import { User } from "@/types"
-import { jwtDecode } from 'jwt-decode'
-import { useEffect, useState } from "react"
-
-async function getUserData(email: string) {
-    const response = await fetch(`/api/getUserData?email=${email}`, {
-        method: 'GET',
-    });
-    const data = await response.json();
-    return data.user;
-}
+import { Box } from "@chakra-ui/react"
+import { useAppContext } from "../contexts/AppContext"
 
 export default function Dashboard() {
-    const [user, setUser] = useState<User | null>(null)
-    const { logOut, token } = useAuth()
+    const { user, errorLoadingUser} = useAppContext()
+    const { logOut } = useAuth()
 
-    useEffect(() => {
-        async function fetchUserData() {
-            const decodedToken = jwtDecode<{ email: string }>(token!)
-            const userData = await getUserData(decodedToken.email)
-            console.log(userData)
-            setUser(userData)
-        }
-
-        fetchUserData()
-    }, [token])
-
-
+    if(errorLoadingUser) {
+        return <h1>Failed to search for user</h1>
+    }
 
     return (
-        <div>
+        <>
             {user ? (
-                <div>
+                <Box paddingX={{ base: "6", sm: "10", md: "14"}} paddingY={{ base: "4", sm: "8" }}>
+                    <Header />
                     <h1>Welcome, {user.name}</h1>
                     <button onClick={logOut}>Log Out</button>
-                </div>
+                </Box>
 
             ) : (
-                <h1>Carregando...</h1>
+                <h1>Loading...</h1>
             )}
-        </div >
+        </>
     )
 }
