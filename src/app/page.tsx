@@ -1,11 +1,10 @@
 import { BtnSignIn } from "@/components/btnSignIn/BtnSignIn";
 import { BtnSignUp } from "@/components/btnSignUp/BtnSignUp";
 import HomepageBackground from "@/components/homepageBackground/HomepageBackground";
-import { Box, Flex, Text, Theme } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
 
 export default function Home() {
   return (
-    <Theme appearance="dark">
       <Box position="relative" width="100vw" height="100vh" overflow="hidden">
         <HomepageBackground />
 
@@ -37,6 +36,5 @@ export default function Home() {
           </Flex>
         </Flex>
       </Box>
-    </Theme>
   );
 }
