@@ -1,6 +1,7 @@
 "use client"
 
 import { useAuth } from '@/hooks/useAuth';
+import { Transaction } from '@/types';
 import { User } from '@prisma/client';
 import { jwtDecode } from 'jwt-decode';
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
@@ -8,7 +9,9 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 interface AppContextTypes {
     user: User | null
     errorLoadingUser: boolean
+    transactions: Transaction[] | []
     refetchUser: (email: string) => Promise<void>
+    refetchTransactions: (userId: string) => Promise<void>
 }
 
 const AppContext = createContext({} as AppContextTypes);
@@ -36,9 +39,25 @@ async function getUserData(email: string) {
     return data.user;
 }
 
+async function getTransactions(id: string) {
+    const response = await fetch(`/api/getTransactions?id=${id}`, {
+        method: 'GET',
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to fetch user data");
+    }
+
+    const data = await response.json();
+
+    return data.transactions;
+}
+
 export function AppProvider({ children }: UsersProvider) {
     const [user, setUser] = useState<User | null>(null)
     const [errorLoadingUser, setErrorLoadingUser] = useState(false)
+    const [transactions, setTransactions] = useState<Transaction[] | []>([])
     const { token } = useAuth()
 
     useEffect(() => {
@@ -46,8 +65,13 @@ export function AppProvider({ children }: UsersProvider) {
             const decodedToken = jwtDecode<{ email: string }>(token)
             try {
                 const userData = await getUserData(decodedToken.email)
-                console.log(userData)
                 setUser(userData)
+
+                if (userData.id) {
+                    const transactionsData = await getTransactions(userData.id);
+                    setTransactions(transactionsData)
+                }
+
             } catch (error) {
                 console.error(error);
                 setErrorLoadingUser(true)
@@ -64,9 +88,14 @@ export function AppProvider({ children }: UsersProvider) {
         const updatedUser = await getUserData(email);
         setUser(updatedUser); 
     }
+
+    async function refetchTransactions(userId: string) {
+        const updatedTransactions = await getTransactions(userId)
+        setTransactions(updatedTransactions)
+    }
     
     return (
-        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser }}>
+        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser, refetchTransactions, transactions }}>
             {children}
         </AppContext.Provider>
     )
