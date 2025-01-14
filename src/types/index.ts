@@ -1,6 +1,6 @@
 export enum TransactionType {
-    Income = "income",
-    Outcome = "outcome",
+    income = "income",
+    expense = "expense",
 }
 
 export interface User {
@@ -12,13 +12,11 @@ export interface User {
     updatedAt: Date;
 }
 
-export interface FinancialInfo {
+export interface Transaction {
     id: string;
-    userId: string;
     name: string;
     type: TransactionType;
     value: number;
-    date: Date;
     createdAt: Date;
     updatedAt: Date;
 }
