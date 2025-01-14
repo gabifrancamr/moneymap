@@ -7,7 +7,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog"
 import { Theme } from "@chakra-ui/react"
-import SignInForm from "../signInForm/signInForm"
+import FormSignIn from "../formSignIn/formSignIn"
 
 export function BtnSignIn() {
   return (
@@ -20,7 +20,7 @@ export function BtnSignIn() {
       <DialogContent>
         <Theme appearance="dark">
           <DialogBody justifyContent={"center"}>
-            <SignInForm />
+            <FormSignIn />
           </DialogBody>
           <DialogCloseTrigger />
         </Theme>
