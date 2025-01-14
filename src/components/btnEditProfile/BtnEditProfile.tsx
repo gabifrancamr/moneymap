@@ -9,9 +9,9 @@ import {
 } from "@/components/ui/dialog";
 import { Flex, Text } from "@chakra-ui/react";
 import { FaUserEdit } from "react-icons/fa";
-import EditProfileForm from "../editProfileForm/EditProfileForm";
+import FormEditProfile from "../formEditProfile/FormEditProfile";
 
-export function EditProfileBtn() {
+export function BtnEditProfile() {
     return (
         <DialogRoot>
             <DialogTrigger cursor={"pointer"}>
@@ -25,7 +25,7 @@ export function EditProfileBtn() {
                     <DialogTitle>Edit Profile</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
-                    <EditProfileForm />
+                    <FormEditProfile />
                 </DialogBody>
                 <DialogCloseTrigger />
             </DialogContent>

@@ -25,7 +25,7 @@ const signInSchema = zod.object({
 
 export type typeSignInSchema = zod.infer<typeof signInSchema>
 
-export default function SignInForm() {
+export default function FormSignIn() {
     const [showPassword, setShowPassword] = useState(false)
     const { handleAuthentication } = useAuth()
 

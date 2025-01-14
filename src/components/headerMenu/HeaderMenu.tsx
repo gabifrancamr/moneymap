@@ -8,9 +8,9 @@ import { useAuth } from "@/hooks/useAuth"
 import { Box, Flex, Text } from "@chakra-ui/react"
 import { FaUserCircle } from "react-icons/fa"
 import { IoLogOutSharp } from "react-icons/io5"
-import { EditProfileBtn } from "../editProfileBtn/EditProfileBtn"
+import { BtnEditProfile } from "../btnEditProfile/BtnEditProfile"
 
-export function MenuHeader() {
+export function HeaderMenu() {
     const { logOut } = useAuth()
     return (
         <MenuRoot>
@@ -21,7 +21,7 @@ export function MenuHeader() {
             </MenuTrigger>
             <MenuContent>
                 <MenuItem value="edit-profile" cursor={"pointer"}>
-                    <EditProfileBtn />
+                    <BtnEditProfile />
                 </MenuItem>
                 <MenuItem value="logout" cursor={"pointer"} onClick={logOut}>
                     <Flex alignItems={"center"} gap={"2"}>

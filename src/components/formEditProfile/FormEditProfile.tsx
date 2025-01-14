@@ -43,7 +43,7 @@ const editFormSchema = zod.object({
 
 export type typeEditFormSchema = zod.infer<typeof editFormSchema>
 
-export default function EditProfileForm() {
+export default function FormEditProfile() {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const { user, refetchUser } = useAppContext()
@@ -80,7 +80,7 @@ export default function EditProfileForm() {
             const response = await fetch('/api/editUser', {
                 method: 'POST',
                 headers: {
-                    'Context-Type': 'application/json'
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             })
