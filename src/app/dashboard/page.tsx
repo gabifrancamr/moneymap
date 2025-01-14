@@ -1,30 +1,38 @@
 "use client"
 
 import { Header } from "@/components/header/Header"
-import { useAuth } from "@/hooks/useAuth"
+import { InputSearch } from "@/components/inputSearch/InputSearch"
+import { Summary } from "@/components/summary/Summary"
+import { TransactionsTable } from "@/components/transactionsTable/TransactionsTable"
 import { Box } from "@chakra-ui/react"
 import { useAppContext } from "../../contexts/AppContext"
 
 export default function Dashboard() {
-    const { user, errorLoadingUser} = useAppContext()
-    const { logOut } = useAuth()
+    const { user, errorLoadingUser } = useAppContext()
 
-    if(errorLoadingUser) {
-        return <h1>Failed to search for user</h1>
+    if (errorLoadingUser) {
+        return <h1>Error loading user</h1>
     }
 
     return (
         <>
-            {user ? (
-                <Box paddingX={{ base: "6", sm: "10", md: "14"}} paddingY={{ base: "4", sm: "8" }}>
+            <Box className="container" paddingX={{ base: "4", md: "8", lg: "24" }} paddingY={{ base: "2rem" }} spaceY={"6"}>
+                <Header />
+                <Summary />
+                <Box className="glassmorphism" padding="4">
+                    <InputSearch />
+                    <TransactionsTable />
+                </Box>
+            </Box>
+            {/* {user ? (
+                <Box paddingX={{ base: "6", sm: "10", md: "14"}} paddingY={{ base: "4", sm: "8" }} spaceY={"6"}>
                     <Header />
-                    <h1>Welcome, {user.name}</h1>
-                    <button onClick={logOut}>Log Out</button>
+                    <Summary />
                 </Box>
 
             ) : (
                 <h1>Loading...</h1>
-            )}
+            )} */}
         </>
     )
 }
