@@ -21,16 +21,15 @@ model User {
   password   String
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
-  financials FinancialInfo[]
+  transactions Transaction[]
 }
 
-model FinancialInfo {
+model Transaction {
   id        String   @id @default(uuid())
   userId    String
   name      String
   type      TransactionType
   value     Float
-  date      DateTime
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -39,5 +38,5 @@ model FinancialInfo {
 
 enum TransactionType {
   income
-  outcome
+  expense
 }
