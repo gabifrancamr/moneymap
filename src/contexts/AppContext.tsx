@@ -4,12 +4,14 @@ import { useAuth } from '@/hooks/useAuth';
 import { Transaction } from '@/types';
 import { User } from '@prisma/client';
 import { jwtDecode } from 'jwt-decode';
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from 'react';
 
 interface AppContextTypes {
     user: User | null
-    errorLoadingUser: boolean
     transactions: Transaction[] | []
+    filteredTransactions: [] | Transaction[]
+    setFilteredTransactions: Dispatch<SetStateAction<Transaction[] | []>>
+    errorLoadingUser: boolean
     refetchUser: (email: string) => Promise<void>
     refetchTransactions: (userId: string) => Promise<void>
 }
@@ -58,6 +60,7 @@ export function AppProvider({ children }: UsersProvider) {
     const [user, setUser] = useState<User | null>(null)
     const [errorLoadingUser, setErrorLoadingUser] = useState(false)
     const [transactions, setTransactions] = useState<Transaction[] | []>([])
+    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[] | []>([])
     const { token } = useAuth()
 
     useEffect(() => {
@@ -70,6 +73,7 @@ export function AppProvider({ children }: UsersProvider) {
                 if (userData.id) {
                     const transactionsData = await getTransactions(userData.id);
                     setTransactions(transactionsData)
+                    setFilteredTransactions(transactionsData)
                 }
 
             } catch (error) {
@@ -95,7 +99,7 @@ export function AppProvider({ children }: UsersProvider) {
     }
     
     return (
-        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser, refetchTransactions, transactions }}>
+        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser, refetchTransactions, transactions, filteredTransactions, setFilteredTransactions }}>
             {children}
         </AppContext.Provider>
     )

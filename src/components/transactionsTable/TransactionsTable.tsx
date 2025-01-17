@@ -1,8 +1,17 @@
-import { useAppContext } from "@/contexts/AppContext"
-import { Table } from "@chakra-ui/react"
+import { useAppContext } from "@/contexts/AppContext";
+import { usePagination } from "@/hooks/usePagination";
+import { dateFormatter, priceFromatter } from "@/utils/formatter";
+import { Table } from "@chakra-ui/react";
 
 export function TransactionsTable() {
-    const { transactions } = useAppContext()
+    const { filteredTransactions } = useAppContext()
+
+    const { currentPage, usersPerPage } = usePagination()
+
+    const startIndex = (currentPage - 1) * usersPerPage
+    const endIndex = startIndex + usersPerPage
+    const currentTransactions = filteredTransactions.slice(startIndex, endIndex)
+
     return (
         <Table.ScrollArea borderWidth="1px">
             <Table.Root variant="outline" interactive showColumnBorder>
@@ -17,13 +26,13 @@ export function TransactionsTable() {
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
-                    {transactions.map((transaction) => (
+                    {currentTransactions.map((transaction) => (
                         <Table.Row key={transaction.id}>
                             <Table.Cell>{transaction.name}</Table.Cell>
-                            <Table.Cell>{transaction.value}</Table.Cell>
+                            <Table.Cell>{priceFromatter.format(transaction.value)}</Table.Cell>
                             <Table.Cell>{transaction.type}</Table.Cell>
-                            <Table.Cell>{transaction.createdAt.toString()}</Table.Cell>
-                            <Table.Cell>{transaction.updatedAt.toString()}</Table.Cell>
+                            <Table.Cell>{dateFormatter.format(new Date(transaction.createdAt))}</Table.Cell>
+                            <Table.Cell>{dateFormatter.format(new Date(transaction.updatedAt))}</Table.Cell>
                             <Table.Cell>excluir, editar</Table.Cell>
                         </Table.Row>
                     ))}

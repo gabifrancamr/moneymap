@@ -26,7 +26,7 @@ export function HeaderMenu() {
                 <MenuItem value="logout" cursor={"pointer"} onClick={logOut}>
                     <Flex alignItems={"center"} gap={"2"}>
                         <IoLogOutSharp size={20} />
-                        <Text>Logout</Text>
+                        <Text>Log out</Text>
                     </Flex>
                 </MenuItem>
             </MenuContent>

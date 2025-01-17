@@ -3,6 +3,7 @@
 import { Header } from "@/components/header/Header"
 import { InputSearch } from "@/components/inputSearch/InputSearch"
 import { Summary } from "@/components/summary/Summary"
+import TablePagination from "@/components/tablePagination/TablePagination"
 import { TransactionsTable } from "@/components/transactionsTable/TransactionsTable"
 import { Box } from "@chakra-ui/react"
 import { useAppContext } from "../../contexts/AppContext"
@@ -19,9 +20,10 @@ export default function Dashboard() {
             <Box className="container" paddingX={{ base: "4", md: "8", lg: "24" }} paddingY={{ base: "2rem" }} spaceY={"6"}>
                 <Header />
                 <Summary />
-                <Box className="glassmorphism" padding="4">
+                <Box className="glassmorphism" padding="4" spaceY={"8"}>
                     <InputSearch />
                     <TransactionsTable />
+                    <TablePagination />
                 </Box>
             </Box>
             {/* {user ? (
