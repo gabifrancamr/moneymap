@@ -3,14 +3,18 @@ import { usePagination } from "@/hooks/usePagination";
 import { dateFormatter, priceFromatter } from "@/utils/formatter";
 import { Table } from "@chakra-ui/react";
 
-export function TransactionsTable() {
+export function TableTransactions() {
     const { filteredTransactions } = useAppContext()
 
     const { currentPage, usersPerPage } = usePagination()
 
+    const sortedTransactions = [...filteredTransactions].sort(
+        (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
     const startIndex = (currentPage - 1) * usersPerPage
     const endIndex = startIndex + usersPerPage
-    const currentTransactions = filteredTransactions.slice(startIndex, endIndex)
+    const currentTransactions = sortedTransactions.slice(startIndex, endIndex)
 
     return (
         <Table.ScrollArea borderWidth="1px">

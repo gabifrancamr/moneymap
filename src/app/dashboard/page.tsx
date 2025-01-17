@@ -4,7 +4,7 @@ import { Header } from "@/components/header/Header"
 import { InputSearch } from "@/components/inputSearch/InputSearch"
 import { Summary } from "@/components/summary/Summary"
 import TablePagination from "@/components/tablePagination/TablePagination"
-import { TransactionsTable } from "@/components/transactionsTable/TransactionsTable"
+import { TableTransactions } from "@/components/tableTransactions/TableTransactions"
 import { Box } from "@chakra-ui/react"
 import { useAppContext } from "../../contexts/AppContext"
 
@@ -22,7 +22,7 @@ export default function Dashboard() {
                 <Summary />
                 <Box className="glassmorphism" padding="4" spaceY={"8"}>
                     <InputSearch />
-                    <TransactionsTable />
+                    <TableTransactions />
                     <TablePagination />
                 </Box>
             </Box>
