@@ -44,8 +44,10 @@ export function InputSearch() {
         <Input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            colorPalette={"green"}
             placeholder="Search Transaction..." 
+            borderColor={"green.200"}
+            focusRingColor={"green"}
+            _placeholder={{ color: "black" }}
         />
     );
 }
