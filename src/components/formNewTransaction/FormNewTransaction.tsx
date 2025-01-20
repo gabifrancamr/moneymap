@@ -23,7 +23,7 @@ const newTransactionFormSchema = zod.object({
             { errorMap: () => ({ message: "Invalid transaction type" }) })
 });
 
-export type typeEditFormSchema = zod.infer<typeof newTransactionFormSchema>
+export type typeNewTransactionSchema = zod.infer<typeof newTransactionFormSchema>
 
 
 export default function FormNewTransaction() {
@@ -34,11 +34,11 @@ export default function FormNewTransaction() {
         control,
         handleSubmit,
         formState: { errors, isSubmitting },
-    } = useForm<typeEditFormSchema>({
+    } = useForm<typeNewTransactionSchema>({
         resolver: zodResolver(newTransactionFormSchema)
     })
 
-    async function handleNewTransaction(data: typeEditFormSchema) {
+    async function handleNewTransaction(data: typeNewTransactionSchema) {
         const userId = user?.id
         const payload = {
             ...data,
