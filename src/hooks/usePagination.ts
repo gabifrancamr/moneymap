@@ -1,4 +1,4 @@
-import { useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export function usePagination() {
     const searchParams = useSearchParams()
@@ -7,7 +7,16 @@ export function usePagination() {
     const currentPage = parseInt(pageParam, 10) || 1
     const usersPerPage = 5
 
+    const pathname = usePathname();
+    const { replace } = useRouter();
+
+    function createPageURL(pageNumber: number) {
+        params.set('page', pageNumber.toString());
+        replace(`${pathname}?${params.toString()}`);
+    };
+
+
     return {
-        params, currentPage, usersPerPage
+        params, currentPage, usersPerPage, createPageURL
     }
 }
