@@ -27,7 +27,9 @@ export function InputSearch() {
                 (transaction) =>
                     transaction.name.toLowerCase().includes(search.toLowerCase()) ||
                     transaction.type.toLowerCase().includes(search.toLowerCase()) ||
-                    transaction.value.toString().includes(search)
+                    transaction.value.toString().includes(search) ||
+                    transaction.createdAt.toString().includes(search) ||
+                    transaction.updatedAt.toString().includes(search)
             )
 
             setFilteredTransactions(filtered)
