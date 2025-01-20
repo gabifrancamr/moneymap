@@ -26,4 +26,5 @@ export interface ResultType {
     message: string
     token?: string
     email?: string
+    userId?: string
 }

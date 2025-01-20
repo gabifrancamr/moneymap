@@ -8,7 +8,7 @@ import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffe
 
 interface AppContextTypes {
     user: User | null
-    transactions: Transaction[] | []
+    transactions: Transaction[]
     filteredTransactions: [] | Transaction[]
     setFilteredTransactions: Dispatch<SetStateAction<Transaction[] | []>>
     errorLoadingUser: boolean
@@ -59,8 +59,8 @@ async function getTransactions(id: string) {
 export function AppProvider({ children }: UsersProvider) {
     const [user, setUser] = useState<User | null>(null)
     const [errorLoadingUser, setErrorLoadingUser] = useState(false)
-    const [transactions, setTransactions] = useState<Transaction[] | []>([])
-    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[] | []>([])
+    const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([])
     const { token } = useAuth()
 
     useEffect(() => {
