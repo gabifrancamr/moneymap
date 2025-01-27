@@ -1,3 +1,5 @@
+"use client"
+
 import {
     DialogBody,
     DialogCloseTrigger,
@@ -9,6 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { Transaction } from "@/types";
 import { Button } from "@chakra-ui/react";
+import { useState } from "react";
 import { MdEdit } from "react-icons/md";
 import FormEditTransaction from "../formEditTransaction/FormEditTransaction";
 
@@ -17,8 +20,9 @@ interface BtnEditTransactionProps {
 }
 
 export default function BtnEditTransaction({ transaction }: BtnEditTransactionProps) {
+    const [open, setOpen] = useState(false)
     return (
-        <DialogRoot>
+        <DialogRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
             <DialogTrigger>
                 <Button size={"sm"} colorPalette={"green"}>
                     <MdEdit />
@@ -29,7 +33,7 @@ export default function BtnEditTransaction({ transaction }: BtnEditTransactionPr
                     <DialogTitle>Edit Transaction</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
-                    <FormEditTransaction transaction={transaction} />
+                    <FormEditTransaction transaction={transaction} setOpen={setOpen} />
                 </DialogBody>
                 <DialogCloseTrigger />
             </DialogContent>

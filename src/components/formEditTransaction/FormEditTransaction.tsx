@@ -5,6 +5,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import { ResultType, Transaction } from "@/types";
 import { HStack, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SetStateAction } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from 'sonner';
 import * as zod from 'zod';
@@ -28,9 +29,10 @@ export type typeNewTransactionSchema = zod.infer<typeof newTransactionFormSchema
 
 interface FormEditTransactionProps {
     transaction: Transaction;
+    setOpen: (value: SetStateAction<boolean>) => void
 }
 
-export default function FormEditTransaction({ transaction }: FormEditTransactionProps) {
+export default function FormEditTransaction({ transaction, setOpen }: FormEditTransactionProps) {
 
     const { refetchTransactions } = useAppContext()
 
@@ -42,14 +44,14 @@ export default function FormEditTransaction({ transaction }: FormEditTransaction
     } = useForm<typeNewTransactionSchema>({
         resolver: zodResolver(newTransactionFormSchema),
         defaultValues: {
-            name: transaction.name, 
-            value: transaction.value, 
-            type: transaction.type, 
+            name: transaction.name,
+            value: transaction.value,
+            type: transaction.type,
         }
     })
 
     async function handleEditTransaction(data: typeNewTransactionSchema) {
-        
+
         const payload = {
             ...data,
             id: transaction.id
@@ -68,6 +70,7 @@ export default function FormEditTransaction({ transaction }: FormEditTransaction
 
             if (response.status === 200 && result.userId) {
                 await refetchTransactions(result.userId)
+                setOpen(false)
                 toast.success(result.message)
             }
         } catch (error) {
@@ -104,7 +107,7 @@ export default function FormEditTransaction({ transaction }: FormEditTransaction
                         colorPalette={"green"}
                     />
                 </Field>
-                
+
                 <Field
                     label="Type"
                     invalid={!!errors.type}

@@ -6,7 +6,7 @@ import { useAppContext } from "@/contexts/AppContext";
 import { ResultType } from "@/types";
 import { Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'sonner';
 import * as zod from 'zod';
@@ -43,7 +43,11 @@ const editFormSchema = zod.object({
 
 export type typeEditFormSchema = zod.infer<typeof editFormSchema>
 
-export default function FormEditProfile() {
+interface FormEditProfile {
+    setOpen: (value: SetStateAction<boolean>) => void
+}
+
+export default function FormEditProfile({ setOpen }: FormEditProfile) {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const { user, refetchUser } = useAppContext()
@@ -71,9 +75,9 @@ export default function FormEditProfile() {
             return;
         }
 
-        const payload = { 
+        const payload = {
             ...filteredData,
-            email: user?.email, 
+            email: user?.email,
         }
 
         try {
@@ -87,8 +91,9 @@ export default function FormEditProfile() {
 
             const result: ResultType = await response.json();
 
-            if(response.status === 200 && result.email) {
+            if (response.status === 200 && result.email) {
                 refetchUser(result.email)
+                setOpen(false)
                 toast.success(result.message)
             }
         } catch (error) {

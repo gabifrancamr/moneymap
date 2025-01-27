@@ -1,3 +1,5 @@
+"use client"
+
 import {
     DialogBody,
     DialogCloseTrigger,
@@ -8,12 +10,14 @@ import {
     DialogTrigger
 } from "@/components/ui/dialog";
 import { Flex, Text } from "@chakra-ui/react";
+import { useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import FormEditProfile from "../formEditProfile/FormEditProfile";
 
 export function BtnEditProfile() {
+    const [open, setOpen] = useState(false)
     return (
-        <DialogRoot>
+        <DialogRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
             <DialogTrigger cursor={"pointer"}>
                 <Flex alignItems={"center"} gap={"2"}>
                     <FaUserEdit size={20} />
@@ -25,7 +29,7 @@ export function BtnEditProfile() {
                     <DialogTitle>Edit Profile</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
-                    <FormEditProfile />
+                    <FormEditProfile setOpen={setOpen} />
                 </DialogBody>
                 <DialogCloseTrigger />
             </DialogContent>

@@ -5,6 +5,7 @@ import { Radio, RadioGroup } from "@/components/ui/radio";
 import { useAppContext } from "@/contexts/AppContext";
 import { HStack, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from '@hookform/resolvers/zod';
+import { SetStateAction } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as zod from 'zod';
@@ -25,8 +26,11 @@ const newTransactionFormSchema = zod.object({
 
 export type typeNewTransactionSchema = zod.infer<typeof newTransactionFormSchema>
 
+interface FormNewTransactionProps {
+    setOpen: (value: SetStateAction<boolean>) => void
+}
 
-export default function FormNewTransaction() {
+export default function FormNewTransaction({ setOpen }: FormNewTransactionProps) {
     const { user, refetchTransactions } = useAppContext()
 
     const {
@@ -50,12 +54,13 @@ export default function FormNewTransaction() {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }, 
+                },
                 body: JSON.stringify(payload)
             })
 
-            if(response.status === 200) {
+            if (response.status === 200) {
                 await refetchTransactions(userId!)
+                setOpen(false)
                 toast.success("Transaction created successfully")
             }
 
