@@ -12,6 +12,7 @@ interface AppContextTypes {
     filteredTransactions: [] | Transaction[]
     setFilteredTransactions: Dispatch<SetStateAction<Transaction[] | []>>
     errorLoadingUser: boolean
+    loadingTransactions: boolean
     refetchUser: (email: string) => Promise<void>
     refetchTransactions: (userId: string) => Promise<void>
 }
@@ -59,8 +60,11 @@ async function getTransactions(id: string) {
 export function AppProvider({ children }: UsersProvider) {
     const [user, setUser] = useState<User | null>(null)
     const [errorLoadingUser, setErrorLoadingUser] = useState(false)
+
     const [transactions, setTransactions] = useState<Transaction[]>([])
     const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([])
+    const [loadingTransactions, setLoadingTransactions] = useState(true)
+
     const { token } = useAuth()
 
     useEffect(() => {
@@ -74,6 +78,7 @@ export function AppProvider({ children }: UsersProvider) {
                     const transactionsData = await getTransactions(userData.id);
                     setTransactions(transactionsData)
                     setFilteredTransactions(transactionsData)
+                    setLoadingTransactions(false)
                 }
 
             } catch (error) {
@@ -82,24 +87,24 @@ export function AppProvider({ children }: UsersProvider) {
             }
         }
 
-        if(token) {
+        if (token) {
             fetchUserData(token)
         }
-        
+
     }, [token])
 
     async function refetchUser(email: string) {
         const updatedUser = await getUserData(email);
-        setUser(updatedUser); 
+        setUser(updatedUser);
     }
 
     async function refetchTransactions(userId: string) {
         const updatedTransactions = await getTransactions(userId)
         setTransactions(updatedTransactions)
     }
-    
+
     return (
-        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser, refetchTransactions, transactions, filteredTransactions, setFilteredTransactions }}>
+        <AppContext.Provider value={{ user, errorLoadingUser, refetchUser, refetchTransactions, transactions, filteredTransactions, setFilteredTransactions, loadingTransactions }}>
             {children}
         </AppContext.Provider>
     )
