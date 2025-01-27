@@ -38,7 +38,7 @@ export function TableTransactions() {
                         <Table.ColumnHeader>Type</Table.ColumnHeader>
                         <Table.ColumnHeader>Created at</Table.ColumnHeader>
                         <Table.ColumnHeader>Updated at</Table.ColumnHeader>
-                        <Table.ColumnHeader>Actions</Table.ColumnHeader>
+                        <Table.ColumnHeader textAlign="end">Actions</Table.ColumnHeader>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
