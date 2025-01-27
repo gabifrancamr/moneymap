@@ -1,5 +1,6 @@
 "use client"
 
+import { Error } from "@/components/error/Error"
 import { Header } from "@/components/header/Header"
 import { InputSearch } from "@/components/inputSearch/InputSearch"
 import { Summary } from "@/components/summary/Summary"
@@ -13,7 +14,7 @@ export default function Dashboard() {
     const { user, errorLoadingUser } = useAppContext()
 
     if (errorLoadingUser) {
-        return <h1>Error loading user</h1>
+        return <Error />
     }
 
     return (
