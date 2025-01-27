@@ -7,6 +7,7 @@ import TablePagination from "@/components/tablePagination/TablePagination"
 import { TableTransactions } from "@/components/tableTransactions/TableTransactions"
 import { Box } from "@chakra-ui/react"
 import { useAppContext } from "../../contexts/AppContext"
+import Loading from "../loading"
 
 export default function Dashboard() {
     const { user, errorLoadingUser } = useAppContext()
@@ -17,24 +18,20 @@ export default function Dashboard() {
 
     return (
         <>
-            <Box className="container" paddingX={{ base: "4", md: "8", lg: "24" }} paddingY={{ base: "2rem" }} spaceY={"6"}>
-                <Header />
-                <Summary />
-                <Box className="glassmorphism" padding="4" spaceY={"8"}>
-                    <InputSearch />
-                    <TableTransactions />
-                    <TablePagination />
-                </Box>
-            </Box>
-            {/* {user ? (
-                <Box paddingX={{ base: "6", sm: "10", md: "14"}} paddingY={{ base: "4", sm: "8" }} spaceY={"6"}>
+            {user ? (
+                <Box className="container" paddingX={{ base: "4", md: "8", lg: "24" }} paddingY={{ base: "2rem" }} spaceY={"6"}>
                     <Header />
-                    <Summary />
+                    <Summary user={user} />
+                    <Box className="glassmorphism" padding="4" spaceY={"8"}>
+                        <InputSearch />
+                        <TableTransactions />
+                        <TablePagination />
+                    </Box>
                 </Box>
 
             ) : (
-                <h1>Loading...</h1>
-            )} */}
+                <Loading />
+            )}
         </>
     )
 }

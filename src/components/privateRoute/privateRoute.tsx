@@ -1,5 +1,6 @@
 "use client"
 
+import Loading from '@/app/loading';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -22,7 +23,7 @@ export function PrivateRoute({ children }: { children: React.ReactNode }) {
   return (
     <>
       {loading ? (
-        <h1>Loading...</h1>
+        <Loading />
       ) : (
         <>{children}</>
       )}
