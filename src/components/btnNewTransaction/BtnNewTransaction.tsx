@@ -16,12 +16,12 @@ import FormNewTransaction from "../formNewTransaction/FormNewTransaction";
 export function BtnNewTransaction() {
     const [open, setOpen] = useState(false)
     return (
-        <DialogRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <DialogRoot placement={"center"} open={open} onOpenChange={(e) => setOpen(e.open)}>
             <DialogTrigger cursor={"pointer"}>
                 <Button colorPalette={"green"}>New Transaction</Button>
             </DialogTrigger>
             <DialogContent>
-                <DialogHeader>
+                <DialogHeader textAlign={"center"}>
                     <DialogTitle>Create a new transaction</DialogTitle>
                 </DialogHeader>
                 <DialogBody>

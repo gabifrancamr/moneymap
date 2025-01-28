@@ -22,7 +22,7 @@ interface BtnEditTransactionProps {
 export default function BtnEditTransaction({ transaction }: BtnEditTransactionProps) {
     const [open, setOpen] = useState(false)
     return (
-        <DialogRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <DialogRoot placement={"center"} open={open} onOpenChange={(e) => setOpen(e.open)}>
             <DialogTrigger>
                 <Button size={"sm"} colorPalette={"green"}>
                     <MdEdit />
@@ -30,7 +30,7 @@ export default function BtnEditTransaction({ transaction }: BtnEditTransactionPr
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Edit Transaction</DialogTitle>
+                    <DialogTitle textAlign={"center"}>Edit Transaction</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
                     <FormEditTransaction transaction={transaction} setOpen={setOpen} />

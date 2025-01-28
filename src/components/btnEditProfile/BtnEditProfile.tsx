@@ -17,7 +17,7 @@ import FormEditProfile from "../formEditProfile/FormEditProfile";
 export function BtnEditProfile() {
     const [open, setOpen] = useState(false)
     return (
-        <DialogRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
+        <DialogRoot placement={"center"} open={open} onOpenChange={(e) => setOpen(e.open)}>
             <DialogTrigger cursor={"pointer"}>
                 <Flex alignItems={"center"} gap={"2"}>
                     <FaUserEdit size={20} />
@@ -26,7 +26,7 @@ export function BtnEditProfile() {
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Edit Profile</DialogTitle>
+                    <DialogTitle textAlign={"center"}>Edit Profile</DialogTitle>
                 </DialogHeader>
                 <DialogBody>
                     <FormEditProfile setOpen={setOpen} />

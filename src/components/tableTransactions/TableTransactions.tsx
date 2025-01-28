@@ -7,6 +7,7 @@ import { Flex, Spinner, Table, Text } from "@chakra-ui/react";
 import { useEffect } from "react";
 import BtnDeleteTransaction from "../btnDeleteTransaction/BtnDeleteTransaction";
 import BtnEditTransaction from "../btnEditTransaction/BtnEditTransaction";
+import { BtnNewTransaction } from "../btnNewTransaction/BtnNewTransaction";
 
 export function TableTransactions() {
     const { filteredTransactions, loadingTransactions } = useAppContext()
@@ -54,7 +55,7 @@ export function TableTransactions() {
                                     <Table.Row key={transaction.id}>
                                         <Table.Cell>{transaction.name}</Table.Cell>
                                         <Table.Cell>{priceFromatter.format(transaction.value)}</Table.Cell>
-                                        <Table.Cell color={transaction.type === "expense" ? "green.500" : "red.600"}>{transaction.type === "expense" ? "Expense" : "Income"}</Table.Cell>
+                                        <Table.Cell color={transaction.type === "expense" ? "red.600" : "green.500"}>{transaction.type === "expense" ? "Expense" : "Income"}</Table.Cell>
                                         <Table.Cell>{dateFormatter.format(new Date(transaction.createdAt))}</Table.Cell>
                                         <Table.Cell>{dateFormatter.format(new Date(transaction.updatedAt))}</Table.Cell>
                                         <Table.Cell>
@@ -69,7 +70,10 @@ export function TableTransactions() {
                         </Table.Root>
                     </Table.ScrollArea>
                 ) : (
-                    <Text color={"green.500"}>No transactions were found. Create a new one.</Text>
+                    <Flex flexDirection={"column"} justifyContent={"center"} alignItems={"center"} gap={"1rem"}>
+                        <Text color={"green.500"}>Looks like there are no transactions yet. Create a new one to get started!</Text>
+                        <BtnNewTransaction />
+                    </Flex>
                 )
             )}
         </>

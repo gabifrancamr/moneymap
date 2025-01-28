@@ -13,13 +13,13 @@ export function BtnSignIn() {
   return (
     <DialogRoot placement={"center"}>
       <DialogTrigger asChild>
-        <Button colorPalette={"green"} variant="solid" size="sm">
+        <Button colorPalette={"green"} variant="solid" size="sm" width={"83px"}>
           Sign In
         </Button>
       </DialogTrigger>
       <DialogContent>
         <Theme appearance="dark">
-          <DialogBody justifyContent={"center"}>
+          <DialogBody paddingTop={"1.5rem"} justifyContent={"center"}>
             <FormSignIn />
           </DialogBody>
           <DialogCloseTrigger />
