@@ -3,12 +3,13 @@
 import { Error } from "@/components/error/Error"
 import { Header } from "@/components/header/Header"
 import { InputSearch } from "@/components/inputSearch/InputSearch"
+import { Loading } from "@/components/loading/Loading"
 import { Summary } from "@/components/summary/Summary"
 import TablePagination from "@/components/tablePagination/TablePagination"
 import { TableTransactions } from "@/components/tableTransactions/TableTransactions"
 import { Box } from "@chakra-ui/react"
 import { useAppContext } from "../../contexts/AppContext"
-import Loading from "../loading"
+
 
 export default function Dashboard() {
     const { user, errorLoadingUser } = useAppContext()
