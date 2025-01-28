@@ -1,4 +1,5 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useCallback } from "react";
 
 export function usePagination() {
     const searchParams = useSearchParams()
@@ -10,10 +11,10 @@ export function usePagination() {
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    function createPageURL(pageNumber: number) {
+    const createPageURL = useCallback((pageNumber: number) => {
         params.set('page', pageNumber.toString());
         replace(`${pathname}?${params.toString()}`);
-    };
+    }, [params, pathname, replace]);
 
 
     return {
