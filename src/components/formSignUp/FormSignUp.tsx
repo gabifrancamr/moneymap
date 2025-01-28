@@ -104,7 +104,6 @@ export default function FormSignUp() {
             <Stack gap="4" align="center" maxW="sm">
                 <Field
                     label="Full name"
-                    required
                     invalid={!!errors.name}
                     errorText={errors.name?.message}
                 >
@@ -116,7 +115,6 @@ export default function FormSignUp() {
                 </Field>
                 <Field
                     label="E-mail"
-                    required
                     invalid={!!errors.email}
                     errorText={errors.email?.message}
                 >
@@ -130,7 +128,6 @@ export default function FormSignUp() {
                 </Field>
                 <Field
                     label="Password"
-                    required
                     invalid={!!errors.password}
                     errorText={errors.password?.message}
                 >
@@ -146,7 +143,6 @@ export default function FormSignUp() {
 
                 <Field
                     label="Confirm Password"
-                    required
                     invalid={!!errors.confirmPassword}
                     errorText={errors.confirmPassword?.message}
                 >

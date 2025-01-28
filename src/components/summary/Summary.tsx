@@ -17,8 +17,8 @@ export function Summary({ user }: SummaryProps) {
         <Box className="box-shadow" rounded={"md"} paddingY={"4"} paddingX={"6"} spaceY={"12"}>
             <Flex justifyContent={"space-between"} alignItems={"center"} gap={"8"} wrap={"wrap"}>
                 <Flex gap={"0.5rem"}>
-                    <Text color={"green.500"} fontSize={"3xl"}>Welcome,</Text>
-                    <Text fontSize={"3xl"}>{user.name}</Text>
+                    <Text color={"green.500"} fontSize={{ base: "lg", md: "2xl", lg: "3xl" }}>Welcome,</Text>
+                    <Text fontSize={{ base: "lg", md: "2xl", lg: "3xl" }}>{user.name}</Text>
                 </Flex>
                 <BtnNewTransaction />
             </Flex>

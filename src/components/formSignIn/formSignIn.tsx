@@ -44,11 +44,11 @@ export default function FormSignIn() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
             });
-    
+
             const result: ResultType = await response.json();
-    
+
             if (response.status === 200 && result.token) {
-                handleAuthentication(result.token); 
+                handleAuthentication(result.token);
                 toast.success(result.message);
             } else if (response.status === 404) {
                 toast.error(result.message);
@@ -62,14 +62,13 @@ export default function FormSignIn() {
             toast.error('An unexpected error occurred. Please try again.');
         }
     }
-    
+
 
     return (
         <form onSubmit={handleSubmit(handleLoginUser)}>
             <Stack gap="4" align="center" maxW="sm">
                 <Field
                     label="E-mail"
-                    required
                     invalid={!!errors.email}
                     errorText={errors.email?.message}
                 >
@@ -83,7 +82,6 @@ export default function FormSignIn() {
                 </Field>
                 <Field
                     label="Password"
-                    required
                     invalid={!!errors.password}
                     errorText={errors.password?.message}
                 >
