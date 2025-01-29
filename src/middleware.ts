@@ -10,7 +10,9 @@ export function middleware(request: NextRequest) {
 
   if (
     !currentUser &&
-    request.nextUrl.pathname.startsWith('/dashboard')
+    request.nextUrl.pathname.startsWith('/dashboard') ||
+    !currentUser &&
+    request.nextUrl.pathname.startsWith('/admin')
   ) {
     return NextResponse.redirect(new URL('/', request.url))
   }
