@@ -101,6 +101,7 @@ export function AppProvider({ children }: UsersProvider) {
     async function refetchTransactions(userId: string) {
         const updatedTransactions = await getTransactions(userId)
         setTransactions(updatedTransactions)
+        setFilteredTransactions(updatedTransactions)
     }
 
     return (
