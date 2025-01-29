@@ -7,18 +7,18 @@ import { useAdminContext } from "@/contexts/AdminContext"
 import { Box, Flex, Spinner, Text } from "@chakra-ui/react"
 
 export default function Admin() {
-    const { users, loadingUsers } = useAdminContext()
+    const { usersAdmin, loadingUsersAdmin } = useAdminContext()
 
 
     return (
         <>
-            {loadingUsers ? (
+            {loadingUsersAdmin ? (
                 <Flex gap={"0.5rem"} alignItems={"center"}>
                     <Spinner size="sm" />
                     <Text color={"green.500"}>Loading users...</Text>
                 </Flex>
             ) : (
-                users.length > 0 ? (
+                usersAdmin.length > 0 ? (
                     <Box className="container" paddingX={{ base: "4", md: "8", lg: "24" }} paddingY={{ base: "2rem" }} spaceY={"6"}>
                         <Header />
                         <Box className="glassmorphism" padding="4" spaceY={"8"}>

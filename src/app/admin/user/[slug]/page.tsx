@@ -17,14 +17,14 @@ interface TransactionsByIdProps {
 
 
 export default function TransactionsByIdPage({ params }: TransactionsByIdProps) {
-    const { filteredTransactions, loadingTransactions, setLoadingTransactions, refetchTransactions } = useAdminContext()
+    const { filteredTransactionsAdmin, loadingTransactionsAdmin, setLoadingTransactionsAdmin, refetchTransactionsAdmin } = useAdminContext()
     const { currentPage, usersPerPage, createPageURL } = usePagination()
 
     useEffect(() => {
         async function loadData() {
-            setLoadingTransactions(true)
-            await refetchTransactions(params.slug)
-            setLoadingTransactions(false)
+            setLoadingTransactionsAdmin(true)
+            await refetchTransactionsAdmin(params.slug)
+            setLoadingTransactionsAdmin(false)
         }
 
         if (params.slug) {
@@ -32,7 +32,7 @@ export default function TransactionsByIdPage({ params }: TransactionsByIdProps) 
         }
     }, [params.slug])
 
-    const sortedTransactions = [...filteredTransactions].sort(
+    const sortedTransactions = [...filteredTransactionsAdmin].sort(
         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
@@ -48,14 +48,14 @@ export default function TransactionsByIdPage({ params }: TransactionsByIdProps) 
 
     return (
         <>
-            {loadingTransactions ? (
+            {loadingTransactionsAdmin ? (
                 <Flex gap={"0.5rem"} alignItems={"center"} justifyContent={"center"} height={"100vh"}>
                     <Spinner size="sm" />
                     <Text color={"green.500"}>Loading transactions...</Text>
                 </Flex>
 
             ) : (
-                filteredTransactions.length > 0 ? (
+                filteredTransactionsAdmin.length > 0 ? (
                     <Box className="container" paddingX={{ base: "4", md: "8", lg: "24" }} paddingY={{ base: "2rem" }} spaceY={"6"}>
                         <Header />
                         <TableAdminTransactions currentTransactions={currentTransactions} />

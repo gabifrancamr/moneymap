@@ -7,17 +7,17 @@ import { Flex, Spinner, Table, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect } from "react";
 import { FaCircleDown } from "react-icons/fa6";
-import BtnDeleteTransaction from "../../btnDeleteTransaction/BtnDeleteTransaction";
-import BtnEditTransaction from "../../btnEditTransaction/BtnEditTransaction";
 import { BtnNewTransaction } from "../../btnNewTransaction/BtnNewTransaction";
 import { Button } from "../../ui/button";
+import BtnDeleteUser from "../btnDeleteUser/BtnDeleteUser";
+import { BtnEditUser } from "../btnEditUser/BtnEditUser";
 
 export function TableAdmin() {
-    const { filteredUsers, loadingUsers } = useAdminContext()
+    const { filteredUsersAdmin, loadingUsersAdmin } = useAdminContext()
 
     const { currentPage, usersPerPage, createPageURL } = usePagination()
 
-    const sortedUsers = [...filteredUsers].sort(
+    const sortedUsers = [...filteredUsersAdmin].sort(
         (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
@@ -33,14 +33,14 @@ export function TableAdmin() {
 
     return (
         <>
-            {loadingUsers ? (
+            {loadingUsersAdmin ? (
                 <Flex gap={"0.5rem"} alignItems={"center"}>
                     <Spinner size="sm" />
                     <Text color={"green.500"}>Loading transactions...</Text>
                 </Flex>
 
             ) : (
-                filteredUsers.length > 0 ? (
+                filteredUsersAdmin.length > 0 ? (
                     <Table.ScrollArea borderWidth="1px">
                         <Table.Root variant="line" interactive showColumnBorder colorPalette={"green"}>
                             <Table.Header>
@@ -65,8 +65,8 @@ export function TableAdmin() {
                                         <Table.Cell>{dateFormatter.format(new Date(user.updatedAt))}</Table.Cell>
                                         <Table.Cell>
                                             <Flex gap={"0.5rem"} justifyContent={"flex-end"}>
-                                                <BtnEditTransaction />
-                                                <BtnDeleteTransaction />
+                                                <BtnEditUser user={user} />
+                                                <BtnDeleteUser user={user} />
                                                 <Link href={`/admin/user/${user.id}`}><Button>
                                                     <FaCircleDown />
                                                 </Button></Link>

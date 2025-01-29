@@ -5,17 +5,17 @@ import { useAppContext } from "./AppContext";
 
 
 interface AdminContextTypes {
-    users: User[]
-    filteredUsers: User[]
-    setFilteredUsers: Dispatch<SetStateAction<User[] | []>>
-    loadingUsers: boolean
-    transactions: Transaction[]
-    filteredTransactions: [] | Transaction[]
-    setFilteredTransactions: Dispatch<SetStateAction<Transaction[] | []>>
-    loadingTransactions: boolean
-    setLoadingTransactions: Dispatch<SetStateAction<boolean>>
-    refetchUsers: () => Promise<void>
-    refetchTransactions: (userId: string) => Promise<void>
+    usersAdmin: User[]
+    filteredUsersAdmin: User[]
+    setFilteredUsersAdmin: Dispatch<SetStateAction<User[] | []>>
+    loadingUsersAdmin: boolean
+    transactionsAdmin: Transaction[]
+    filteredTransactionsAdmin: [] | Transaction[]
+    setFilteredTransactionsAdmin: Dispatch<SetStateAction<Transaction[] | []>>
+    loadingTransactionsAdmin: boolean
+    setLoadingTransactionsAdmin: Dispatch<SetStateAction<boolean>>
+    refetchUsersAdmin: () => Promise<void>
+    refetchTransactionsAdmin: (userId: string) => Promise<void>
 }
 
 const AdminContext = createContext({} as AdminContextTypes)
@@ -24,7 +24,7 @@ interface AdminProviderTypes {
     children: ReactNode
 }
 
-async function getAllUsers() {
+async function getAllUsersAdmin() {
     try {
         const response = await fetch('/api/getAllUsers', {
             method: 'GET'
@@ -44,7 +44,7 @@ async function getAllUsers() {
     }
 }
 
-async function getTransactions(id: string) {
+async function getTransactionsAdmin(id: string) {
     const response = await fetch(`/api/getTransactionsById/${id}`, {
         method: 'GET',
     });
@@ -60,34 +60,34 @@ async function getTransactions(id: string) {
 }
 
 export function AdminProvider({ children }: AdminProviderTypes) {
-    const [users, setUsers] = useState<User[]>([])
-    const [filteredUsers, setFilteredUsers] = useState<User[]>([])
-    const [loadingUsers, setLoadingUsers] = useState(true)
+    const [usersAdmin, setUsersAdmin] = useState<User[]>([])
+    const [filteredUsersAdmin, setFilteredUsersAdmin] = useState<User[]>([])
+    const [loadingUsersAdmin, setLoadingUsersAdmin] = useState(true)
 
-    const [transactions, setTransactions] = useState<Transaction[]>([])
-    const [filteredTransactions, setFilteredTransactions] = useState<Transaction[]>([])
-    const [loadingTransactions, setLoadingTransactions] = useState(true)
+    const [transactionsAdmin, setTransactionsAdmin] = useState<Transaction[]>([])
+    const [filteredTransactionsAdmin, setFilteredTransactionsAdmin] = useState<Transaction[]>([])
+    const [loadingTransactionsAdmin, setLoadingTransactionsAdmin] = useState(true)
 
     const { user } = useAppContext()
 
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const usersData = await getAllUsers()
-                setUsers(usersData)
-                setFilteredUsers(usersData)
+                const usersData = await getAllUsersAdmin()
+                setUsersAdmin(usersData)
+                setFilteredUsersAdmin(usersData)
 
                 if (usersData.id) {
-                    const transactionsData = await getTransactions(usersData.id);
-                    setTransactions(transactionsData)
-                    setFilteredTransactions(transactionsData)
+                    const transactionsData = await getTransactionsAdmin(usersData.id);
+                    setTransactionsAdmin(transactionsData)
+                    setFilteredTransactionsAdmin(transactionsData)
                 }
 
             } catch (error) {
                 console.error("Failed to fetch users", error)
             } finally {
-                setLoadingUsers(false)
-                setLoadingTransactions(false)
+                setLoadingUsersAdmin(false)
+                setLoadingTransactionsAdmin(false)
             }
         }
 
@@ -98,20 +98,32 @@ export function AdminProvider({ children }: AdminProviderTypes) {
 
     }, [user])
 
-    async function refetchUsers() {
-        const updatedUser = await getAllUsers();
-        setUsers(updatedUser);
-        setFilteredUsers(updatedUser)
+    async function refetchUsersAdmin() {
+        const updatedUser = await getAllUsersAdmin();
+        setUsersAdmin(updatedUser);
+        setFilteredUsersAdmin(updatedUser)
     }
 
-    async function refetchTransactions(userId: string) {
-        const updatedTransactions = await getTransactions(userId)
-        setTransactions(updatedTransactions)
-        setFilteredTransactions(updatedTransactions)
+    async function refetchTransactionsAdmin(userId: string) {
+        const updatedTransactions = await getTransactionsAdmin(userId)
+        setTransactionsAdmin(updatedTransactions)
+        setFilteredTransactionsAdmin(updatedTransactions)
     }
 
     return (
-        <AdminContext.Provider value={{ users, loadingUsers, filteredUsers, setFilteredUsers, transactions, filteredTransactions, setFilteredTransactions, loadingTransactions, refetchUsers, refetchTransactions, setLoadingTransactions }}>
+        <AdminContext.Provider value={{
+            usersAdmin,
+            filteredUsersAdmin,
+            setFilteredUsersAdmin,
+            loadingUsersAdmin,
+            transactionsAdmin,
+            filteredTransactionsAdmin,
+            setFilteredTransactionsAdmin,
+            loadingTransactionsAdmin,
+            setLoadingTransactionsAdmin,
+            refetchUsersAdmin,
+            refetchTransactionsAdmin,
+        }}>
             {children}
         </AdminContext.Provider>
     )

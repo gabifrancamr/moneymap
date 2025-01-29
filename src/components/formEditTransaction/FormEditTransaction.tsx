@@ -1,6 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
+import { useAdminContext } from "@/contexts/AdminContext";
 import { useAppContext } from "@/contexts/AppContext";
 import { ResultType, Transaction } from "@/types";
 import { HStack, Input, Stack } from "@chakra-ui/react";
@@ -34,7 +35,8 @@ interface FormEditTransactionProps {
 
 export default function FormEditTransaction({ transaction, setOpen }: FormEditTransactionProps) {
 
-    const { refetchTransactions } = useAppContext()
+    const { refetchTransactions, user } = useAppContext()
+    const { refetchTransactionsAdmin } = useAdminContext()
 
     const {
         register,
@@ -69,7 +71,11 @@ export default function FormEditTransaction({ transaction, setOpen }: FormEditTr
             const result: ResultType = await response.json();
 
             if (response.status === 200 && result.userId) {
-                await refetchTransactions(result.userId)
+                if (user?.role === 'admin') {
+                    await refetchTransactionsAdmin(result.userId)
+                } else {
+                    await refetchTransactions(result.userId)
+                }
                 setOpen(false)
                 toast.success(result.message)
             }

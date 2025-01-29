@@ -1,15 +1,19 @@
+import { useAdminContext } from "@/contexts/AdminContext";
 import { useAppContext } from "@/contexts/AppContext";
 import { ResultType, Transaction } from "@/types";
+import { SetStateAction } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { Button } from "../ui/button";
 
 interface FormDeleteTransactionProps {
     transaction: Transaction
+    setOpen: (value: SetStateAction<boolean>) => void
 }
 
-export default function FormDeleteTransaction({ transaction }: FormDeleteTransactionProps) {
-    const { refetchTransactions } = useAppContext()
+export default function FormDeleteTransaction({ transaction, setOpen }: FormDeleteTransactionProps) {
+    const { refetchTransactions, user } = useAppContext()
+    const { refetchTransactionsAdmin } = useAdminContext()
 
     const {
         handleSubmit,
@@ -31,7 +35,12 @@ export default function FormDeleteTransaction({ transaction }: FormDeleteTransac
             const result: ResultType = await response.json();
 
             if (response.status === 200 && result.userId) {
-                await refetchTransactions(result.userId)
+                if (user?.role === 'admin') {
+                    await refetchTransactionsAdmin(result.userId)
+                } else {
+                    await refetchTransactions(result.userId)
+                }
+                setOpen(false)
                 toast.success(result.message)
             }
         } catch (error) {
@@ -39,11 +48,11 @@ export default function FormDeleteTransaction({ transaction }: FormDeleteTransac
         }
     }
     return (
-        <form onSubmit={ handleSubmit(handleDeleteUser)}>
-            <Button 
-                type="submit" 
+        <form onSubmit={handleSubmit(handleDeleteUser)}>
+            <Button
+                type="submit"
                 loading={isSubmitting}
-                disabled={isSubmitting} 
+                disabled={isSubmitting}
                 colorPalette={"red"}>
                 Delete
             </Button>
