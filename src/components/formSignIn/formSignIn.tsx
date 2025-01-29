@@ -20,7 +20,7 @@ const signInSchema = zod.object({
         .string()
         .nonempty("Password is required")
         .min(5, "Password must have at least 5 characters")
-        .max(15, "Password must have at most 15 characters"),
+        .max(25, "Password must have at most 15 characters"),
 })
 
 export type typeSignInSchema = zod.infer<typeof signInSchema>
@@ -89,7 +89,7 @@ export default function FormSignIn() {
                         {...register("password")}
                         visible={showPassword}
                         onVisibleChange={setShowPassword}
-                        maxLength={15}
+                        maxLength={25}
                         autoComplete="new-password"
                         colorPalette={"green"}
                     />

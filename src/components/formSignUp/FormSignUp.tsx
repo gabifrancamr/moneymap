@@ -24,7 +24,7 @@ const signUpSchema = zod.object({
         .string()
         .nonempty("Password is required")
         .min(5, "Password must have at least 5 characters")
-        .max(15, "Password must have at most 15 characters"),
+        .max(25, "Password must have at most 25 characters"),
     confirmPassword: zod.string(),
 }).superRefine((data, ctx) => {
     if (data.password !== data.confirmPassword) {
@@ -135,7 +135,7 @@ export default function FormSignUp() {
                         {...register("password")}
                         visible={showPassword}
                         onVisibleChange={setShowPassword}
-                        maxLength={15}
+                        maxLength={25}
                         autoComplete="new-password"
                         colorPalette={"green"}
                     />
@@ -150,7 +150,7 @@ export default function FormSignUp() {
                         {...register("confirmPassword")}
                         visible={showConfirmPassword}
                         onVisibleChange={setShowConfirmPassword}
-                        maxLength={15}
+                        maxLength={25}
                         autoComplete="new-password"
                         colorPalette={"green"}
                     />
