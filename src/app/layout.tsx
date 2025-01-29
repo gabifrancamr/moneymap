@@ -1,4 +1,5 @@
 import { Provider } from "@/components/ui/provider";
+import { AdminProvider } from "@/contexts/AdminContext";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Toaster } from 'sonner';
@@ -9,9 +10,6 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "MoneyMap",
-  icons: {
-    icon: '/favicon.ico',
-  },
 };
 
 export default function RootLayout({
@@ -24,8 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
         <Provider>
           <AppProvider>
-            {children}
-            <Toaster richColors position="top-center" closeButton />
+            <AdminProvider>
+              {children}
+              <Toaster richColors position="top-center" closeButton />
+            </AdminProvider>
           </AppProvider>
         </Provider>
       </body>
