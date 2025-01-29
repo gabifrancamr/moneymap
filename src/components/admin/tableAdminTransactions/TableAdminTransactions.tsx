@@ -1,3 +1,5 @@
+import BtnDeleteTransaction from "@/components/btnDeleteTransaction/BtnDeleteTransaction";
+import BtnEditTransaction from "@/components/btnEditTransaction/BtnEditTransaction";
 import { Transaction } from "@/types";
 import { dateFormatter, priceFromatter } from "@/utils/formatter";
 import { Flex, Table } from "@chakra-ui/react";
@@ -30,7 +32,8 @@ export function TableAdminTransactions({ currentTransactions }: TableAdminTransa
                             <Table.Cell>{dateFormatter.format(new Date(transaction.updatedAt))}</Table.Cell>
                             <Table.Cell>
                                 <Flex gap={"0.5rem"} justifyContent={"flex-end"}>
-
+                                    <BtnEditTransaction transaction={transaction} />
+                                    <BtnDeleteTransaction transaction={transaction} />
                                 </Flex>
                             </Table.Cell>
                         </Table.Row>
