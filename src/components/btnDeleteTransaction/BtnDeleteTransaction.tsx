@@ -34,7 +34,7 @@ export default function BtnDeleteTransaction({ transaction }: BtnDeleteTransacti
                 </DialogHeader>
                 <DialogBody>
                     <Flex alignItems={"center"} justifyContent={"center"} gap={"1rem"}>
-                        <FormDeleteTransaction transaction={transaction} />
+                        <FormDeleteTransaction transaction={transaction} setOpen={setOpen} />
                         <Button colorPalette={"green"} onClick={() => setOpen(false)}>Cancel</Button>
                     </Flex>
                 </DialogBody>
