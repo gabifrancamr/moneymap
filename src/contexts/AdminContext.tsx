@@ -25,9 +25,11 @@ interface AdminProviderTypes {
 }
 
 async function getAllUsersAdmin() {
-    const response = await fetch('/api/getAllUsers', {
+    const response = await fetch(`/api/getAllUsers?timestamp=${Date.now()}`, {
         method: 'GET',
-    })
+        cache: 'no-store',
+        next: { revalidate: 0 }
+    });
 
     if (!response.ok) {
         const errorData = await response.json()
@@ -67,6 +69,11 @@ export function AdminProvider({ children }: AdminProviderTypes) {
     const { user } = useAppContext()
 
     useEffect(() => {
+        console.log("Users updated:", usersAdmin);
+        console.log("Filtered users updated:", filteredUsersAdmin);
+    }, [usersAdmin, filteredUsersAdmin]);
+
+    useEffect(() => {
         async function fetchUsers() {
             try {
                 const usersData = await getAllUsersAdmin()
@@ -88,8 +95,10 @@ export function AdminProvider({ children }: AdminProviderTypes) {
     }, [user])
 
     async function refetchUsersAdmin() {
+        console.log("Refetching users...")
         try {
-            const updatedUser = await getAllUsersAdmin();
+            const updatedUser = await getAllUsersAdmin()
+            console.log("Updated users:", updatedUser)
             setUsersAdmin(updatedUser);
             setFilteredUsersAdmin(updatedUser)
         } catch (error) {
