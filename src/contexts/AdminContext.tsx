@@ -27,7 +27,8 @@ interface AdminProviderTypes {
 async function getAllUsersAdmin() {
     try {
         const response = await fetch('/api/getAllUsers', {
-            method: 'GET'
+            method: 'GET',
+            cache: 'no-store'
         })
 
         if (!response.ok) {
