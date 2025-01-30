@@ -92,7 +92,7 @@ export default function FormEditProfile({ setOpen }: FormEditProfile) {
             const result: ResultType = await response.json();
 
             if (response.status === 200 && result.email) {
-                refetchUser(result.email)
+                await refetchUser(result.email)
                 setOpen(false)
                 toast.success(result.message)
             }
