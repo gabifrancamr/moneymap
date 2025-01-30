@@ -69,11 +69,6 @@ export function AdminProvider({ children }: AdminProviderTypes) {
     const { user } = useAppContext()
 
     useEffect(() => {
-        console.log("Users updated:", usersAdmin);
-        console.log("Filtered users updated:", filteredUsersAdmin);
-    }, [usersAdmin, filteredUsersAdmin]);
-
-    useEffect(() => {
         async function fetchUsers() {
             try {
                 const usersData = await getAllUsersAdmin()
@@ -95,10 +90,8 @@ export function AdminProvider({ children }: AdminProviderTypes) {
     }, [user])
 
     async function refetchUsersAdmin() {
-        console.log("Refetching users...")
         try {
             const updatedUser = await getAllUsersAdmin()
-            console.log("Updated users:", updatedUser)
             setUsersAdmin(updatedUser);
             setFilteredUsersAdmin(updatedUser)
         } catch (error) {

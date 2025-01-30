@@ -10,13 +10,7 @@ export async function GET(request: Request) {
                 status: 200,
                 users: users.length > 0 ? users : [],
             },
-            {
-                status: 200,
-                headers: {
-                    "Cache-Control": "no-store, max-age=0",
-                    "Pragma": "no-cache",
-                },
-            }
+            { status: 200 }
         );
     } catch (error) {
         console.error(error);
