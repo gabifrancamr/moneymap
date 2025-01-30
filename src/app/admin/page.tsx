@@ -9,11 +9,10 @@ import { Box, Flex, Spinner, Text } from "@chakra-ui/react"
 export default function Admin() {
     const { usersAdmin, loadingUsersAdmin } = useAdminContext()
 
-
     return (
         <>
             {loadingUsersAdmin ? (
-                <Flex gap={"0.5rem"} alignItems={"center"}>
+                <Flex gap={"0.5rem"} alignItems={"center"} justifyContent={"center"} height={"100vh"}>
                     <Spinner size="sm" />
                     <Text color={"green.500"}>Loading users...</Text>
                 </Flex>
@@ -28,7 +27,11 @@ export default function Admin() {
                         </Box>
                     </Box>
                 ) : (
-                    <p>Nenhum usuário encontrado.</p>
+                    <Flex gap={"0.5rem"} alignItems={"center"} justifyContent={"center"} height={"100vh"}>
+                        <Spinner size="sm" />
+                        <Text color={"green.500"}>Looks like there are no users yet.</Text>
+                    </Flex>
+
                 )
             )}
         </>

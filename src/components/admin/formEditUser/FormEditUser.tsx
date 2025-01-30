@@ -43,12 +43,12 @@ const editFormSchema = zod.object({
 
 export type typeEditFormSchema = zod.infer<typeof editFormSchema>
 
-interface FormEditUser {
+interface FormEditUserProps {
     setOpen: (value: SetStateAction<boolean>) => void
     user: User
 }
 
-export default function FormEditUser({ setOpen, user }: FormEditUser) {
+export default function FormEditUser({ setOpen, user }: FormEditUserProps) {
     const [showPassword, setShowPassword] = useState(false)
     const [showConfirmPassword, setShowConfirmPassword] = useState(false)
     const { refetchUsersAdmin } = useAdminContext()

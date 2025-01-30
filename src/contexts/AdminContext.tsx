@@ -25,24 +25,19 @@ interface AdminProviderTypes {
 }
 
 async function getAllUsersAdmin() {
-    try {
-        const response = await fetch('/api/getAllUsers', {
-            method: 'GET',
-            cache: 'no-store'
-        })
+    const response = await fetch('/api/getAllUsers', {
+        method: 'GET',
+    })
 
-        if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(errorData.message || "Failed to fetch user data")
-        }
-
-        const data = await response.json()
-
-        return data.users
-    } catch (error) {
-        console.log(error)
-        return []
+    if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.message || "Failed to fetch user data")
     }
+
+    const data = await response.json()
+
+    return data.users
+
 }
 
 async function getTransactionsAdmin(id: string) {
@@ -52,7 +47,7 @@ async function getTransactionsAdmin(id: string) {
 
     if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch user data");
+        throw new Error(errorData.message || "Failed to fetch transactions data");
     }
 
     const data = await response.json();

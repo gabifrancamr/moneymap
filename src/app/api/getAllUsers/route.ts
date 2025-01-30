@@ -8,7 +8,7 @@ export async function GET(request: Request) {
         return NextResponse.json(
             {
                 status: 200,
-                users,
+                users: users.length > 0 ? users : [],
             },
             { status: 200 }
         )

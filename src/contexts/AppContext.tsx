@@ -49,7 +49,7 @@ async function getTransactions(id: string) {
 
     if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || "Failed to fetch user data");
+        throw new Error(errorData.message || "Failed to fetch transactions data");
     }
 
     const data = await response.json();
