@@ -38,7 +38,7 @@ async function getAllUsersAdmin() {
 
         const data = await response.json()
 
-        return data.user
+        return data.users
     } catch (error) {
         console.log(error)
         return []
