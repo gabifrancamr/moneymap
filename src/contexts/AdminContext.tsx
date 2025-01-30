@@ -77,13 +77,6 @@ export function AdminProvider({ children }: AdminProviderTypes) {
                 const usersData = await getAllUsersAdmin()
                 setUsersAdmin(usersData)
                 setFilteredUsersAdmin(usersData)
-
-                if (usersData.id) {
-                    const transactionsData = await getTransactionsAdmin(usersData.id);
-                    setTransactionsAdmin(transactionsData)
-                    setFilteredTransactionsAdmin(transactionsData)
-                }
-
             } catch (error) {
                 console.error("Failed to fetch users", error)
             } finally {
@@ -100,15 +93,23 @@ export function AdminProvider({ children }: AdminProviderTypes) {
     }, [user])
 
     async function refetchUsersAdmin() {
-        const updatedUser = await getAllUsersAdmin();
-        setUsersAdmin(updatedUser);
-        setFilteredUsersAdmin(updatedUser)
+        try {
+            const updatedUser = await getAllUsersAdmin();
+            setUsersAdmin(updatedUser);
+            setFilteredUsersAdmin(updatedUser)
+        } catch (error) {
+            console.error("Failed to fetch users", error)
+        }
     }
 
     async function refetchTransactionsAdmin(userId: string) {
-        const updatedTransactions = await getTransactionsAdmin(userId)
-        setTransactionsAdmin(updatedTransactions)
-        setFilteredTransactionsAdmin(updatedTransactions)
+        try {
+            const updatedTransactions = await getTransactionsAdmin(userId)
+            setTransactionsAdmin(updatedTransactions)
+            setFilteredTransactionsAdmin(updatedTransactions)
+        } catch (error) {
+            console.error("Failed to fetch transactions", error)
+        }
     }
 
     return (

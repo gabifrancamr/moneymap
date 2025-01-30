@@ -35,11 +35,8 @@ export default function FormDeleteTransaction({ transaction, setOpen }: FormDele
             const result: ResultType = await response.json();
 
             if (response.status === 200 && result.userId) {
-                if (user?.role === 'admin') {
-                    await refetchTransactionsAdmin(result.userId)
-                } else {
-                    await refetchTransactions(result.userId)
-                }
+                await refetchTransactionsAdmin(result.userId)
+                await refetchTransactions(result.userId)
                 setOpen(false)
                 toast.success(result.message)
             }

@@ -35,7 +35,7 @@ interface FormEditTransactionProps {
 
 export default function FormEditTransaction({ transaction, setOpen }: FormEditTransactionProps) {
 
-    const { refetchTransactions, user } = useAppContext()
+    const { refetchTransactions } = useAppContext()
     const { refetchTransactionsAdmin } = useAdminContext()
 
     const {
@@ -71,11 +71,8 @@ export default function FormEditTransaction({ transaction, setOpen }: FormEditTr
             const result: ResultType = await response.json();
 
             if (response.status === 200 && result.userId) {
-                if (user?.role === 'admin') {
-                    await refetchTransactionsAdmin(result.userId)
-                } else {
-                    await refetchTransactions(result.userId)
-                }
+                await refetchTransactions(result.userId) //updating transactions role user
+                await refetchTransactionsAdmin(result.userId) //updating transactions role admin 
                 setOpen(false)
                 toast.success(result.message)
             }
