@@ -25,12 +25,9 @@ interface AdminProviderTypes {
 }
 
 async function getAllUsersAdmin() {
-    const response = await fetch(`/api/getAllUsers?timestamp=${Date.now()}`, {
+    const response = await fetch('/api/getAllUsers', {
         method: 'GET',
-        cache: 'no-store',
-        next: { revalidate: 0 }
-    });
-
+    })
     if (!response.ok) {
         const errorData = await response.json()
         throw new Error(errorData.message || "Failed to fetch user data")
