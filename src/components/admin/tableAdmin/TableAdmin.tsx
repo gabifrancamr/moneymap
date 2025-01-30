@@ -6,7 +6,7 @@ import { dateFormatter } from "@/utils/formatter";
 import { Flex, Spinner, Table, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import { useEffect } from "react";
-import { FaCircleDown } from "react-icons/fa6";
+import { FaEye } from "react-icons/fa6";
 import { BtnNewTransaction } from "../../btnNewTransaction/BtnNewTransaction";
 import { Button } from "../../ui/button";
 import BtnDeleteUser from "../btnDeleteUser/BtnDeleteUser";
@@ -67,9 +67,11 @@ export function TableAdmin() {
                                             <Flex gap={"0.5rem"} justifyContent={"flex-end"}>
                                                 <BtnEditUser user={user} />
                                                 <BtnDeleteUser user={user} />
-                                                <Link href={`/admin/user/${user.id}`}><Button>
-                                                    <FaCircleDown />
-                                                </Button></Link>
+                                                <Link href={`/admin/user/${user.id}`}>
+                                                    <Button size={"sm"}>
+                                                        <FaEye />
+                                                    </Button>
+                                                </Link>
                                             </Flex>
                                         </Table.Cell>
                                     </Table.Row>
